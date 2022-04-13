@@ -14,6 +14,7 @@ class ValueObject(ABC):
             if len(fields_name) == 1 \
             else json.dumps({field_name: getattr(self, field_name) for field_name in fields_name})
 
+@dataclass(frozen=True)
 class UniqueEntityID(ValueObject):
     id: str = field(default_factory=lambda: str(uuid.uuid4()))
 
