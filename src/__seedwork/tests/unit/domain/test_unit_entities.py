@@ -5,7 +5,7 @@ from __seedwork.domain.entities import Entity
 from __seedwork.domain.value_objects import UniqueEntityID
 
 
-@dataclass(frozen=True, kw_only=True)
+@dataclass(frozen=True, kw_only=True, slots=True)
 class StubEntity(Entity):
     prop1: str
     prop2: str
@@ -48,3 +48,8 @@ class TestEntityUnit(unittest.TestCase):
             "prop1": "value1",
             "prop2": "value2",
         })
+
+    def test_set_method(self):
+        entity = StubEntity(prop1="value1", prop2="value2")
+        entity._set("prop1", "changed")
+        self.assertEqual(entity.prop1, "changed")
