@@ -4,10 +4,12 @@ from dataclasses import dataclass, is_dataclass
 from __seedwork.domain.entities import Entity
 from __seedwork.domain.value_objects import UniqueEntityID
 
+
 @dataclass(frozen=True, kw_only=True)
 class StubEntity(Entity):
     prop1: str
     prop2: str
+
 
 class TestEntityUnit(unittest.TestCase):
     def test_is_dataclass_instance(self):
@@ -22,10 +24,11 @@ class TestEntityUnit(unittest.TestCase):
         self.assertEqual(entity.prop2, "value2")
         self.assertIsInstance(entity.unique_entity_id, UniqueEntityID)
         self.assertEqual(entity.unique_entity_id.id, entity.id)
-    
+
     def test_accept_a_valid_uuid(self):
         entity = StubEntity(
-            unique_entity_id=UniqueEntityID("d6a4d428-ccb3-4a80-96c7-31e655a2d02b"),
+            unique_entity_id=UniqueEntityID(
+                "d6a4d428-ccb3-4a80-96c7-31e655a2d02b"),
             prop1="value1",
             prop2="value2",
         )
@@ -34,7 +37,8 @@ class TestEntityUnit(unittest.TestCase):
 
     def test_to_dict_method(self):
         entity = StubEntity(
-            unique_entity_id=UniqueEntityID("d6a4d428-ccb3-4a80-96c7-31e655a2d02b"),
+            unique_entity_id=UniqueEntityID(
+                "d6a4d428-ccb3-4a80-96c7-31e655a2d02b"),
             prop1="value1",
             prop2="value2",
         )

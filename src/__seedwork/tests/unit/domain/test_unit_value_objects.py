@@ -1,11 +1,11 @@
 
 from abc import ABC
 import unittest
-import uuid 
+import uuid
 
 from dataclasses import FrozenInstanceError, dataclass, is_dataclass
 from unittest.mock import patch
-from __seedwork.domain import value_objects
+
 from __seedwork.domain.value_objects import UniqueEntityID, ValueObject
 from __seedwork.domain.exceptions import InvalidUUIDException
 
@@ -13,6 +13,7 @@ from __seedwork.domain.exceptions import InvalidUUIDException
 @dataclass(frozen=True)
 class StubOneProp(ValueObject):
     prop: str
+
 
 @dataclass(frozen=True)
 class StubTwoProp(ValueObject):
@@ -47,6 +48,7 @@ class TestValueObjectUnit(unittest.TestCase):
             value_object = StubOneProp(prop="value")
             value_object.prop = "prop1"
 
+
 class TestValueObjectsUnit(unittest.TestCase):
 
     def test_is_dataclass_instance(self):
@@ -64,8 +66,9 @@ class TestValueObjectsUnit(unittest.TestCase):
                 UniqueEntityID("fake id")
 
                 mock_validate.assert_called_once()
-                self.assertEqual(assert_error.exception.args[0], "ID must be a valid UUID")
-    
+                self.assertEqual(
+                    assert_error.exception.args[0], "ID must be a valid UUID")
+
     def test_accept_uuid_passed_in_constructor(self):
         with patch.object(
             UniqueEntityID,
@@ -73,9 +76,11 @@ class TestValueObjectsUnit(unittest.TestCase):
             autospec=True,
             side_effect=UniqueEntityID._UniqueEntityID__validate
         ) as mock_validate:
-            value_object = UniqueEntityID("0bd8fd62-244b-43fd-998e-786c3a187bfe")
+            value_object = UniqueEntityID(
+                "0bd8fd62-244b-43fd-998e-786c3a187bfe")
             mock_validate.assert_called_once()
-            self.assertEqual(value_object.id, "0bd8fd62-244b-43fd-998e-786c3a187bfe")
+            self.assertEqual(
+                value_object.id, "0bd8fd62-244b-43fd-998e-786c3a187bfe")
 
         uuid_value = uuid.uuid4()
         value_object = UniqueEntityID(uuid_value)

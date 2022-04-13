@@ -19,9 +19,9 @@ class TestCategoryUnit(unittest.TestCase):
         now = dt.now()
 
         c = Category(
-            name="Movie", 
-            description="some description", 
-            is_active=True, 
+            name="Movie",
+            description="some description",
+            is_active=True,
             created_at=now
         )
 
